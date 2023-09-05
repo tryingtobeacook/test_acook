@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v1
 
       - name: Install Sqlplus
         run: | 
@@ -28,12 +28,8 @@ jobs:
           export PATH=/opt/oracle/instantclient_21_4:$PATH
           
           sqlplus -V
-
-      - name: Move acook script
-        run: |
-          sudo cp sample_acook.sh /opt/oracle/sample_acook.sh
-          sudo chmod +x /opt/oracle/sample_acook.sh
-
+          
       - name: Run acook script
         run: |
-          /opt/oracle/sample_acook.sh
+          chmod +x sample_acook.sh
+          ./sample_acook.sh
