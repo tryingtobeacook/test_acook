@@ -12,23 +12,36 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
       - name: Install Sqlplus
-        run: | 
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libaio1
+
+          # Download and install Oracle Instant Client
           wget https://download.oracle.com/otn_software/linux/instantclient/214000/instantclient-basic-linux.x64-21.4.0.0.0dbru.zip
           wget https://download.oracle.com/otn_software/linux/instantclient/214000/instantclient-sqlplus-linux.x64-21.4.0.0.0dbru.zip
-          sudo mkdir -p /opt/oracle
-          sudo unzip instantclient-basic-linux.x64-21.4.0.0.0dbru.zip -d /opt/oracle
-          sudo unzip instantclient-sqlplus-linux.x64-21.4.0.0.0dbru.zip -d /opt/oracle
-          cd /opt/oracle/instantclient_21_4 && find . -type f | sort
-          export LD_LIBRARY_PATH=/opt/oracle/instantclient_21_4:$LD_LIBRARY_PATH
-          export PATH=$LD_LIBRARY_PATH:$PATH
-          export PATH=/opt/oracle/instantclient_21_4:$PATH
+
+          # Create a temporary directory and unzip Oracle Instant Client there
+          unzip -q instantclient-basic-linux.x64-21.4.0.0.0dbru.zip -d instantclient
+          unzip -q instantclient-sqlplus-linux.x64-21.4.0.0.0dbru.zip -d instantclient
+
+          # Move Oracle Instant Client files to system directories
+          sudo mv instantclient/* /usr/lib/
+          sudo ln -s /usr/lib/instantclient/sqlplus /usr/bin/sqlplus
+
+          # Set environment variables
+          export LD_LIBRARY_PATH=/usr/lib/instantclient:$LD_LIBRARY_PATH
+          export TNS_ADMIN=/usr/lib/instantclient/network/admin
 
           sqlplus -V
 
+      - name: Debug PATH
+        run: echo $PATH
+
       - name: Run acook script
         run: |
+
           chmod +x sample_acook.sh
           ./sample_acook.sh
