@@ -14,22 +14,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Download SQLcl
+      - name: Download and Install SQLcl
         run: |
           # Create a directory for SQLcl
           mkdir -p sqlcl
 
-          # Navigate to the directory
-          cd sqlcl
-
-          # Download SQLcl (adjust the version as needed)
-          wget https://www.oracle.com/tools/downloads/sqlcl-downloads.html -O sqlcl-download.html
-
-          # Extract the download link from the HTML file
-          SQLCL_DOWNLOAD_URL=$(grep -o 'https://download.oracle.com[^"]*' sqlcl-download.html)
-
-          # Download SQLcl
-          wget "$SQLCL_DOWNLOAD_URL" -O sqlcl.zip
+          # Download SQLcl from the repository asset (replace YOUR_ASSET_URL)
+          wget -O sqlcl.zip YOUR_ASSET_URL
 
           # Extract SQLcl
           unzip sqlcl.zip
