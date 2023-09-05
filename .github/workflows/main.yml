@@ -5,19 +5,12 @@ on:
   push:
     branches:
       - main
-
+      
 jobs:
   run-script:
     runs-on: ubuntu-latest
 
-    env:
-      LD_LIBRARY_PATH: /opt/oracle/instantclient_21_4:$LD_LIBRARY_PATH
-      PATH: /opt/oracle/instantclient_21_4:$PATH
-
     steps:
-      - name: Install Tar
-        run: sudo apt-get update && sudo apt-get install tar -y
-
       - name: Checkout code
         uses: actions/checkout@v3
 
@@ -29,6 +22,11 @@ jobs:
           sudo unzip instantclient-basic-linux.x64-21.4.0.0.0dbru.zip -d /opt/oracle
           sudo unzip instantclient-sqlplus-linux.x64-21.4.0.0.0dbru.zip -d /opt/oracle
           cd /opt/oracle/instantclient_21_4 && find . -type f | sort
+          
+          # Set Oracle Instant Client environment variables here
+          export LD_LIBRARY_PATH=/opt/oracle/instantclient_21_4:$LD_LIBRARY_PATH
+          export PATH=/opt/oracle/instantclient_21_4:$PATH
+          export TNS_ADMIN=/opt/oracle/instantclient_21_4/network/admin
           
           sqlplus -V
           
