@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Install Sqlplus
         run: | 
@@ -23,22 +23,12 @@ jobs:
           sudo unzip instantclient-sqlplus-linux.x64-21.4.0.0.0dbru.zip -d /opt/oracle
           cd /opt/oracle/instantclient_21_4 && find . -type f | sort
           export LD_LIBRARY_PATH=/opt/oracle/instantclient_21_4:$LD_LIBRARY_PATH
-          export TNS_ADMIN=/opt/oracle/instantclient_21_4/network/admin
+          export PATH=$LD_LIBRARY_PATH:$PATH
+          export PATH=/opt/oracle/instantclient_21_4:$PATH
 
-      - name: Debug PATH
-        run: echo $PATH
+          sqlplus -V
 
       - name: Run acook script
         run: |
-          # Debugging: Check PATH environment variable
-          echo "PATH: $PATH"
-
-          # Debugging: Check if sqlplus is in the PATH
-          which sqlplus
-
-          # Specify the full path to SQL*Plus within the script
-          sqlplus_path="/opt/oracle/instantclient_21_4/sqlplus"
-          $sqlplus_path username/password@your_database @your_script.sql
-          
           chmod +x sample_acook.sh
           ./sample_acook.sh
