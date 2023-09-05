@@ -32,7 +32,7 @@ jobs:
           sqlplus -v  # Check SQL*Plus version to verify it's available
 
           # Install PCF CLI
-          wget https://github.com/cloudfoundry/cli/releases/download/v7.2.0/cf-cli_7.2.0_linux_x86-64.tgz -O cf-cli.tgz
+          wget https://packages.cloudfoundry.org/stable?release=linux64-binary&version=7.0.2&source=github-rel -O cf-cli.tgz
           tar zxvf cf-cli.tgz
           sudo mv cf /usr/local/bin
 
