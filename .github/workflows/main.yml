@@ -26,9 +26,24 @@ jobs:
           export TNS_ADMIN=/opt/oracle/instantclient_21_4/network/admin
           export PATH=/opt/oracle/instantclient_21_4:$PATH
           
-          sqlplus -V
+          # Debugging: Check PATH environment variable
+          echo "PATH: $PATH"
+          
+          # Debugging: Check if sqlplus is in the PATH
+          which sqlplus
+          
+          sqlplus -V  # Check SQL*Plus version to verify it's available
+
+      - name: Debug PATH
+        run: echo $PATH
 
       - name: Run acook script
         run: |
+          # Debugging: Check PATH environment variable
+          echo "PATH: $PATH"
+
+          # Debugging: Check if sqlplus is in the PATH
+          which sqlplus
+
           chmod +x sample_acook.sh
           ./sample_acook.sh
