@@ -16,4 +16,4 @@ jobs:
 
       - name: Run in Docker container
         run: |
-          docker run --rm -v $(pwd):/workspace store/oracle/database-instantclient:latest /bin/sh -c "cd /workspace && chmod +x sample_acook.sh && ./sample_acook.sh"
+          docker run --rm -v $(pwd):/workspace wnameless/oracle-xe-11g /bin/sh -c "cd /workspace && chmod +x sample_acook.sh && ./sample_acook.sh"
