@@ -23,13 +23,11 @@ jobs:
           sudo unzip instantclient-sqlplus-linux.x64-21.4.0.0.0dbru.zip -d /opt/oracle
           cd /opt/oracle/instantclient_21_4 && find . -type f | sort
           export LD_LIBRARY_PATH=/opt/oracle/instantclient_21_4:$LD_LIBRARY_PATH
-          export PATH=$LD_LIBRARY_PATH:$PATH
           export TNS_ADMIN=/opt/oracle/instantclient_21_4/network/admin
-          
-          # Set the PATH environment variable to include the directory where sqlplus is located
           export PATH=/opt/oracle/instantclient_21_4:$PATH
           
-          sqlplus -V
+          # Ensure that the sqlplus executable is in the PATH
+          ls -l /opt/oracle/instantclient_21_4/sqlplus
           
       - name: Run acook script
         run: |
