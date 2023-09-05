@@ -1,10 +1,10 @@
-name: Run test
+name: Run SQLcl Commands
 
 on:
   workflow_dispatch:
   push:
     branches:
-      - main
+      - secondmain
 
 jobs:
   run-script:
@@ -14,29 +14,25 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install Oracle Instant Client and SQL*Plus
+      - name: Install SQLcl
         run: |
-          # Install required packages
-          sudo apt-get -y install libaio1 unzip
-
-          # Download the Oracle Instant Client package (adjust the version as needed)
-          wget https://download.oracle.com/otn_software/linux/instantclient/1911000/instantclient-basic-linux.x64-19.11.0.0.0dbru.zip
-
-          # Extract the package
-          unzip instantclient-basic-linux.x64-19.11.0.0.0dbru.zip
-
-          # Move the files to a specific location (e.g., /opt/oracle/instantclient_19_11)
-          sudo mkdir -p /opt/oracle
-          sudo mv instantclient_19_11 /opt/oracle/
-
-          # Set environment variables
-          echo 'export ORACLE_HOME=/opt/oracle/instantclient_19_11' >> $HOME/.bashrc
-          echo 'export LD_LIBRARY_PATH=/opt/oracle/instantclient_19_11' >> $HOME/.bashrc
-
-        env:
-          ORACLE_HOME: /opt/oracle/instantclient_19_11
-          LD_LIBRARY_PATH: /opt/oracle/instantclient_19_11
+          # Download SQLcl (adjust the version as needed)
+          wget https://www.oracle.com/database/technologies/appdev/sqlcl-downloads.html -O sqlcl.zip
+          unzip sqlcl.zip -d sqlcl
           
-            sqlplus -V
-            chmod +x sample_acook.sh
-            ./sample_acook.sh
+          # Move SQLcl to a specific location (e.g., /opt/sqlcl)
+          sudo mkdir -p /opt/sqlcl
+          sudo mv sqlcl/* /opt/sqlcl/
+          
+          # Add SQLcl to the PATH
+          echo 'export PATH=$PATH:/opt/sqlcl' >> $HOME/.bashrc
+        env:
+          SQLCL_HOME: /opt/sqlcl
+
+      - name: Run SQLcl Command
+        run: |
+          sql username/password@database <<EOF
+          -- Your SQLcl commands go here
+          EOF
+        env:
+          SQLCL_HOME: /opt/sqlcl
