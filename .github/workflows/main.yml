@@ -16,6 +16,9 @@ jobs:
       PATH: /opt/oracle/instantclient_21_4:$PATH
 
     steps:
+      - name: Install tar
+        run: sudo apt-get update && sudo apt-get install tar -y
+
       - name: Checkout code
         uses: actions/checkout@v3
 
