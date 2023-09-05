@@ -10,16 +10,14 @@ jobs:
   run-script:
     runs-on: ubuntu-latest
 
+    env:
+      LD_LIBRARY_PATH: /opt/oracle/instantclient_21_4:$LD_LIBRARY_PATH
+      PATH: /opt/oracle/instantclient_21_4:$PATH
+      TNS_ADMIN: /opt/oracle/instantclient_21_4/network/admin
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
-      - name: Set Environment Variables for Sqlplus
-        env:
-          LD_LIBRARY_PATH: /opt/oracle/instantclient_21_4:$LD_LIBRARY_PATH
-          PATH: /opt/oracle/instantclient_21_4:$PATH
-          TNS_ADMIN: /opt/oracle/instantclient_21_4/network/admin
-        run: echo "Setting environment variables for Sqlplus"
 
       - name: Install Sqlplus
         run: | 
@@ -30,7 +28,11 @@ jobs:
           sudo unzip instantclient-sqlplus-linux.x64-21.4.0.0.0dbru.zip -d /opt/oracle
           cd /opt/oracle/instantclient_21_4 && find . -type f | sort
           
-          sqlplus -V
+          $SQLPLUS -V  # Use the SQLPLUS environment variable instead of the absolute path
+
+      - name: Set SQLPLUS Environment Variable
+        run: |
+          echo "SQLPLUS=/opt/oracle/instantclient_21_4/sqlplus" >> $GITHUB_ENV
           
       - name: Run acook script
         run: |
