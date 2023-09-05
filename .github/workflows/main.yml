@@ -22,15 +22,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Install Sqlplus
+      - name: Install Sqlplus and unar
         run: |
           apt-get update
-          apt-get install -y wget unzip
+          apt-get install -y wget unar
           wget https://download.oracle.com/otn_software/linux/instantclient/214000/instantclient-basic-linux.x64-21.4.0.0.0dbru.zip
           wget https://download.oracle.com/otn_software/linux/instantclient/214000/instantclient-sqlplus-linux.x64-21.4.0.0.0dbru.zip
           mkdir -p /opt/oracle
-          unzip instantclient-basic-linux.x64-21.4.0.0.0dbru.zip -d /opt/oracle
-          unzip instantclient-sqlplus-linux.x64-21.4.0.0.0dbru.zip -d /opt/oracle
+          unar instantclient-basic-linux.x64-21.4.0.0.0dbru.zip -d /opt/oracle
+          unar instantclient-sqlplus-linux.x64-21.4.0.0.0dbru.zip -d /opt/oracle
           cd /opt/oracle/instantclient_21_4 && find . -type f | sort
           
           # You can skip exporting environment variables here
