@@ -10,6 +10,9 @@ jobs:
   run-script:
     runs-on: ubuntu-latest
 
+    container:
+      image: ubuntu:latest  # Use a Docker container-based runner
+
     env:  # Set environment variables
       LD_LIBRARY_PATH: /opt/oracle/instantclient_21_4
       TNS_ADMIN: /opt/oracle/instantclient_21_4/network/admin
@@ -21,9 +24,11 @@ jobs:
 
       - name: Install Sqlplus
         run: |
+          apt-get update
+          apt-get install -y wget unzip
           wget https://download.oracle.com/otn_software/linux/instantclient/214000/instantclient-basic-linux.x64-21.4.0.0.0dbru.zip
           wget https://download.oracle.com/otn_software/linux/instantclient/214000/instantclient-sqlplus-linux.x64-21.4.0.0.0dbru.zip
-          sudo mkdir -p /opt/oracle
+          mkdir -p /opt/oracle
           unzip instantclient-basic-linux.x64-21.4.0.0.0dbru.zip -d /opt/oracle
           unzip instantclient-sqlplus-linux.x64-21.4.0.0.0dbru.zip -d /opt/oracle
           cd /opt/oracle/instantclient_21_4 && find . -type f | sort
@@ -31,11 +36,6 @@ jobs:
           # You can skip exporting environment variables here
 
           sqlplus -V
-
-      - name: Extract ZIP
-        run: |
-          python3 -m zipfile -e instantclient-basic-linux.x64-21.4.0.0.0dbru.zip /opt/oracle
-          python3 -m zipfile -e instantclient-sqlplus-linux.x64-21.4.0.0.0dbru.zip /opt/oracle
 
       - name: Run acook script
         run: |
