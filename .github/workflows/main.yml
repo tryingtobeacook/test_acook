@@ -18,8 +18,8 @@ jobs:
     steps:
       - name: Install tar
         run: |
-          sudo apt-get update
-          sudo apt-get install tar -y
+          apt-get update
+          apt-get install tar -y
 
       - name: Checkout code
         uses: actions/checkout@v3
