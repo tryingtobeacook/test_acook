@@ -39,4 +39,5 @@ jobs:
 
       - name: Run SQL*Plus Command
         run: |
-          sqlplus -V
+          # Run SQL*Plus with the full path
+          $ORACLE_HOME/sqlplus -V
