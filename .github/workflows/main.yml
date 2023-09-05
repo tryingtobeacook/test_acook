@@ -32,8 +32,8 @@ jobs:
           sqlplus -v  # Check SQL*Plus version to verify it's available
 
           # Install PCF CLI
-          wget https://packages.cloudfoundry.org/stable?release=debian64&version=7.0.1&source=github-rel
-          sudo dpkg -i cf-cli_amd64.deb
+          #wget https://packages.cloudfoundry.org/stable?release=debian64&version=7.0.1&source=github-rel
+          #sudo dpkg -i cf-cli_amd64.deb
 
           # Make the script executable and run it
           chmod +x sample_acook.sh
