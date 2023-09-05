@@ -1,7 +1,7 @@
 #!/bin/bash
 
-SQLPLUS_PATH="/opt/oracle/instantclient_21_4/sqlplus"
-export LD_LIBRARY_PATH="/opt/oracle/instantclient_21_4"
+#SQLPLUS_PATH="/opt/oracle/instantclient_21_4/sqlplus"
+#export LD_LIBRARY_PATH="/opt/oracle/instantclient_21_4"
 
 # Define Oracle database connection details
 DB_USER="your_username"
@@ -14,5 +14,5 @@ DB_SID="your_sid"
 SQL_QUERY="SELECT * FROM your_table"
 
 # Execute SQLPlus command
-"${SQLPLUS_PATH}" --version
+sqlplus --version
 

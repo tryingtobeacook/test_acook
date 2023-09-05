@@ -32,4 +32,5 @@ jobs:
       - name: Run acook script
         run: |
           chmod +x sample_acook.sh
+          source oracle_config.sh
           ./sample_acook.sh
