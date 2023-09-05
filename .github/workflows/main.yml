@@ -12,10 +12,11 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
-      - name: Install Sqlplus
-        run: | 
+      - name: Install Sqlplus and PCF CLI
+        run: |
+          # Install Oracle Instant Client
           wget https://download.oracle.com/otn_software/linux/instantclient/214000/instantclient-basic-linux.x64-21.4.0.0.0dbru.zip
           wget https://download.oracle.com/otn_software/linux/instantclient/214000/instantclient-sqlplus-linux.x64-21.4.0.0.0dbru.zip
           sudo mkdir -p /opt/oracle
@@ -23,13 +24,18 @@ jobs:
           sudo unzip instantclient-sqlplus-linux.x64-21.4.0.0.0dbru.zip -d /opt/oracle
           cd /opt/oracle/instantclient_21_4 && find . -type f | sort
           export LD_LIBRARY_PATH=/opt/oracle/instantclient_21_4:$LD_LIBRARY_PATH
-          export PATH=$LD_LIBRARY_PATH:$PATH
           export TNS_ADMIN=/opt/oracle/instantclient_21_4/network/admin
           export PATH=/opt/oracle/instantclient_21_4:$PATH
-          
-          sqlplus -V
-          
-      - name: Run acook script
-        run: |
+
+          # Make sure SQL*Plus is in the PATH
+          export PATH=/opt/oracle/instantclient_21_4:$PATH
+          sqlplus -v  # Check SQL*Plus version to verify it's available
+
+          # Install PCF CLI
+          wget https://github.com/cloudfoundry/cli/releases/download/v7.2.0/cf-cli_7.2.0_linux_x86-64.tgz -O cf-cli.tgz
+          tar zxvf cf-cli.tgz
+          sudo mv cf /usr/local/bin
+
+          # Make the script executable and run it
           chmod +x sample_acook.sh
           ./sample_acook.sh
