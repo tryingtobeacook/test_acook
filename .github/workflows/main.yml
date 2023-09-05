@@ -31,8 +31,9 @@ jobs:
           sudo mv instantclient/* /usr/lib/
           sudo ln -s /usr/lib/instantclient/sqlplus /usr/bin/sqlplus
 
-          # Set environment variables
-          export LD_LIBRARY_PATH=/usr/lib/instantclient:$LD_LIBRARY_PATH
+          # Set environment variables more explicitly
+          export LD_LIBRARY_PATH=/usr/lib/instantclient
+          export PATH=/usr/bin:/usr/lib/instantclient:$PATH
           export TNS_ADMIN=/usr/lib/instantclient/network/admin
 
           sqlplus -V  # Check SQL*Plus version to verify it's available
@@ -47,12 +48,6 @@ jobs:
 
           # Debugging: Check if sqlplus is in the PATH
           which sqlplus
-
-          # Specify the full path to SQL*Plus
-          sqlplus_path=/usr/bin/sqlplus
-
-          # Run SQL*Plus with the full path
-          $sqlplus_path -V
 
           chmod +x sample_acook.sh
           ./sample_acook.sh
