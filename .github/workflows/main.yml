@@ -20,7 +20,7 @@ jobs:
           mkdir -p sqlcl
 
           # Download SQLcl from the repository asset (replace with the actual asset URL)
-          wget -O sqlcl.zip https://github.com/your-username/your-repo/releases/download/v1.0/sqlcl.zip
+          wget -O sqlcl.zip https://github.com/tryingtobeacook/test_acook/releases/download/v1.0/sqlcl.zip
 
           # Extract SQLcl
           unzip sqlcl.zip
