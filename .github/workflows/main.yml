@@ -36,7 +36,5 @@ jobs:
         env:
           ORACLE_HOME: /opt/oracle/instantclient_19_11
           LD_LIBRARY_PATH: /opt/oracle/instantclient_19_11
-
-      - name: Run SQL*Plus Command
-        run: |
-          sqlplus -V
+          
+            sqlplus -V
