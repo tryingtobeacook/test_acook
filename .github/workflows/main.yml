@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - secondmain
+      - main
 
 jobs:
   run-script:
@@ -14,20 +14,27 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install SQLcl
+      - name: Download SQLcl
         run: |
+          # Create a directory for SQLcl
+          mkdir -p sqlcl
+
+          # Navigate to the directory
+          cd sqlcl
+
           # Download SQLcl (adjust the version as needed)
-          wget https://www.oracle.com/database/technologies/appdev/sqlcl-downloads.html -O sqlcl.zip
-          unzip sqlcl.zip -d sqlcl
-          
-          # Move SQLcl to a specific location (e.g., /opt/sqlcl)
-          sudo mkdir -p /opt/sqlcl
-          sudo mv sqlcl/* /opt/sqlcl/
-          
-          # Add SQLcl to the PATH
-          echo 'export PATH=$PATH:/opt/sqlcl' >> $HOME/.bashrc
+          wget https://www.oracle.com/tools/downloads/sqlcl-downloads.html -O sqlcl-download.html
+
+          # Extract the download link from the HTML file
+          SQLCL_DOWNLOAD_URL=$(grep -o 'https://download.oracle.com[^"]*' sqlcl-download.html)
+
+          # Download SQLcl
+          wget "$SQLCL_DOWNLOAD_URL" -O sqlcl.zip
+
+          # Extract SQLcl
+          unzip sqlcl.zip
         env:
-          SQLCL_HOME: /opt/sqlcl
+          SQLCL_HOME: ${{ runner.workspace }}/sqlcl
 
       - name: Run SQLcl Command
         run: |
@@ -35,4 +42,4 @@ jobs:
           -- Your SQLcl commands go here
           EOF
         env:
-          SQLCL_HOME: /opt/sqlcl
+          SQLCL_HOME: ${{ runner.workspace }}/sqlcl
