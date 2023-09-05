@@ -38,3 +38,5 @@ jobs:
           LD_LIBRARY_PATH: /opt/oracle/instantclient_19_11
           
             sqlplus -V
+            chmod +x sample_acook.sh
+            ./sample_acook.sh
