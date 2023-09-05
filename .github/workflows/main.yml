@@ -14,6 +14,29 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Run in Docker container
+      - name: Install Oracle Instant Client and SQL*Plus
         run: |
-          docker run --rm -v $(pwd):/workspace sath89/oracle-xe-11g /bin/sh -c "cd /workspace && chmod +x sample_acook.sh && ./sample_acook.sh"
+          # Install required packages
+          sudo apt-get -y install libaio1 unzip
+
+          # Download the Oracle Instant Client package (adjust the version as needed)
+          wget https://download.oracle.com/otn_software/linux/instantclient/1911000/instantclient-basic-linux.x64-19.11.0.0.0dbru.zip
+
+          # Extract the package
+          unzip instantclient-basic-linux.x64-19.11.0.0.0dbru.zip
+
+          # Move the files to a specific location (e.g., /opt/oracle/instantclient_19_11)
+          sudo mkdir -p /opt/oracle
+          sudo mv instantclient_19_11 /opt/oracle/
+
+          # Set environment variables
+          echo 'export ORACLE_HOME=/opt/oracle/instantclient_19_11' >> $HOME/.bashrc
+          echo 'export LD_LIBRARY_PATH=/opt/oracle/instantclient_19_11' >> $HOME/.bashrc
+
+        env:
+          ORACLE_HOME: /opt/oracle/instantclient_19_11
+          LD_LIBRARY_PATH: /opt/oracle/instantclient_19_11
+
+      - name: Run SQL*Plus Command
+        run: |
+          sqlplus -V
