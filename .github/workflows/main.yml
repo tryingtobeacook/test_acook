@@ -19,8 +19,8 @@ jobs:
           # Create a directory for SQLcl
           mkdir -p sqlcl
 
-          # Download SQLcl from the repository asset (replace YOUR_ASSET_URL)
-          wget -O sqlcl.zip YOUR_ASSET_URL
+          # Download SQLcl from the repository asset (replace with the actual asset URL)
+          wget -O sqlcl.zip https://github.com/your-username/your-repo/releases/download/v1.0/sqlcl.zip
 
           # Extract SQLcl
           unzip sqlcl.zip
