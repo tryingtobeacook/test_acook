@@ -25,7 +25,7 @@ jobs:
           export LD_LIBRARY_PATH=/opt/oracle/instantclient_21_4:$LD_LIBRARY_PATH
           export TNS_ADMIN=/opt/oracle/instantclient_21_4/network/admin
           
-          # Add SQL*Plus directory to the PATH
+          # Add SQL*Plus directory to the PATH (optional)
           echo 'export PATH=/opt/oracle/instantclient_21_4:$PATH' >> $HOME/.bashrc
           source $HOME/.bashrc
           
@@ -41,6 +41,9 @@ jobs:
 
           # Debugging: Check if sqlplus is in the PATH
           which sqlplus
+
+          # Use the full path to execute SQL*Plus
+          /opt/oracle/instantclient_21_4/sqlplus -V
 
           chmod +x sample_acook.sh
           ./sample_acook.sh
