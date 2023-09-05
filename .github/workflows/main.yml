@@ -25,6 +25,8 @@ jobs:
           export LD_LIBRARY_PATH=/opt/oracle/instantclient_21_4:$LD_LIBRARY_PATH
           export PATH=$LD_LIBRARY_PATH:$PATH
           export TNS_ADMIN=/opt/oracle/instantclient_21_4/network/admin
+          
+          # Set the PATH environment variable to include the directory where sqlplus is located
           export PATH=/opt/oracle/instantclient_21_4:$PATH
           
           sqlplus -V
