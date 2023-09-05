@@ -28,3 +28,8 @@ jobs:
           export PATH=/opt/oracle/instantclient_21_4:$PATH
           
           sqlplus -V
+          
+      - name: Run acook script
+        run: |
+          chmod +x sample_acook.sh
+          ./sample_acook.sh
