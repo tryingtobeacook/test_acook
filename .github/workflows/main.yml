@@ -24,8 +24,9 @@ jobs:
           echo 'export ORACLE_HOME=/opt/oracle/instantclient_19_11' >> $HOME/.bashrc
           echo 'export LD_LIBRARY_PATH=/opt/oracle/instantclient_19_11' >> $HOME/.bashrc
 
-        env:
-          ORACLE_HOME: /opt/oracle/instantclient_19_11
-          LD_LIBRARY_PATH: /opt/oracle/instantclient_19_11
-          
+
+          sqlplus -V
+            
+          chmod +x sample_acook.sh
+          ./sample_acook.sh
 
