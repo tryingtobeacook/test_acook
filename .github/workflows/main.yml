@@ -3,7 +3,7 @@ name: Install Oracle SQL*Plus
 on:
   push:
     branches:
-      - main
+      - thirdmain
 
 jobs:
   install-sqlplus:
