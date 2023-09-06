@@ -28,8 +28,6 @@ jobs:
         run: |
           # Add a check for LD_LIBRARY_PATH, PATH, ORACLE_HOME, and TNS_ADMIN
           echo "LD_LIBRARY_PATH: $LD_LIBRARY_PATH"
-          echo "ORACLE_HOME: $ORACLE_HOME"
-          echo "TNS_ADMIN: $TNS_ADMIN"
           chmod +x sample_acook.sh
 
           # Run your own script without specifying the full path to sqlplus
