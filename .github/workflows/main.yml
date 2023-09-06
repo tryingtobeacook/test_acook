@@ -10,32 +10,31 @@ jobs:
   run-script:
     runs-on: ubuntu-latest
 
+    env:
+      LD_LIBRARY_PATH: /opt/oracle/instantclient_21_4:$LD_LIBRARY_PATH
+      PATH: /opt/oracle/instantclient_21_4:$PATH
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: Set up Node.js environment
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16' # You can specify the Node.js version you prefer
-
-      - name: Install libaio1 and unzip
+      - name: Install Sqlplus
         run: |
-          apt-get update -y
-          apt-get install -y libaio1 unzip
+          wget https://download.oracle.com/otn_software/linux/instantclient/214000/instantclient-basic-linux.x64-21.4.0.0.0dbru.zip
+          wget https://download.oracle.com/otn_software/linux/instantclient/214000/instantclient-sqlplus-linux.x64-21.4.0.0.0dbru.zip
+          sudo mkdir -p /opt/oracle
+          sudo unzip instantclient-basic-linux.x64-21.4.0.0.0dbru.zip -d /opt/oracle
+          sudo unzip instantclient-sqlplus-linux.x64-21.4.0.0.0dbru.zip -d /opt/oracle
 
-      - name: Install Oracle Instant Client
+      - name: Check Instant Client files
         run: |
-          wget https://download.oracle.com/otn_software/linux/instantclient/1911000/instantclient-basic-linux.x64-19.11.0.0.0dbru.zip
-          unzip instantclient-basic-linux.x64-19.11.0.0.0dbru.zip
-          mkdir -p /opt/oracle
-          mv instantclient_19_11 /opt/oracle/
-        env:
-          ORACLE_HOME: /opt/oracle/instantclient_19_11
-          LD_LIBRARY_PATH: /opt/oracle/instantclient_19_11:$LD_LIBRARY_PATH
-          PATH: $PATH:/opt/oracle/instantclient_19_11
+          cd /opt/oracle/instantclient_21_4 && find . -type f | sort
 
-      - name: Run sample_acook.sh script
+      - name: Check Sqlplus Version
+        run: |
+          sqlplus -V
+
+      - name: Run shell script
         run: |
           chmod +x sample_acook.sh
           ./sample_acook.sh
