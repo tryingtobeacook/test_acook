@@ -28,8 +28,5 @@ jobs:
           echo 'export LD_LIBRARY_PATH=/opt/oracle/instantclient_21_4:$LD_LIBRARY_PATH' >> $HOME/.bashrc
           echo 'export PATH=/opt/oracle/instantclient_21_4:$PATH' >> $HOME/.bashrc
           source $HOME/.bashrc
-
-      - name: Run shell script
-        run: |
           chmod +x sample_acook.sh
           ./sample_acook.sh
