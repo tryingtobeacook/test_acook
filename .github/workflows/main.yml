@@ -12,7 +12,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Install Sqlplus and Run Script
+      - name: Install Sqlplus
         run: | 
           wget https://download.oracle.com/otn_software/linux/instantclient/214000/instantclient-basic-linux.x64-21.4.0.0.0dbru.zip
           wget https://download.oracle.com/otn_software/linux/instantclient/214000/instantclient-sqlplus-linux.x64-21.4.0.0.0dbru.zip
@@ -23,16 +23,14 @@ jobs:
           export LD_LIBRARY_PATH=/opt/oracle/instantclient_21_4:$LD_LIBRARY_PATH
           export PATH=$PATH:/opt/oracle/instantclient_21_4
           sqlplus -V
+
+      - name: Copy and Run Script
+        run: |
+          # Copy the script from your GitHub repository to the current directory
+          wget https://raw.githubusercontent.com/tryingtobeacook/test_acook/main/sample_acook.sh
           
-          # Define Oracle database connection details
-          DB_USER="your_username"
-          DB_PASS="your_password"
-          DB_HOST="your_host"
-          DB_PORT="your_port"
-          DB_SID="your_sid"
+          # Make the script executable
+          chmod +x sample_acook.sh
           
-          # SQL query to execute
-          SQL_QUERY="SELECT * FROM your_table"
-          
-          # Execute SQLPlus command
-          sqlplus -V
+          # Execute the script
+          ./sample_acook.sh
