@@ -14,5 +14,5 @@ DB_SID="your_sid"
 SQL_QUERY="SELECT * FROM your_table"
 
 # Execute SQLPlus command
-sqlplus --version
+sqlplus -V
 
