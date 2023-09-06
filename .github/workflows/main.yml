@@ -24,4 +24,5 @@ jobs:
           sqlplus -V
       - name: Run shell script
         run: |
-          chmod +x sample_acook. The updated GitHub Actions workflow YAML file with the fix is as follows:
+          chmod +x sample_acook.sh
+          ./sample_acook.sh
