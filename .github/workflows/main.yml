@@ -23,7 +23,10 @@ jobs:
           export LD_LIBRARY_PATH=/opt/oracle/instantclient_21_4:$LD_LIBRARY_PATH
           export PATH=/opt/oracle/instantclient_21_4:$PATH
 
-      - name: Set Oracle Environment
+      - name: Set Environment and Run Script
         run: |
+          echo 'export LD_LIBRARY_PATH=/opt/oracle/instantclient_21_4:$LD_LIBRARY_PATH' >> $GITHUB_ENV
+          echo 'export PATH=/opt/oracle/instantclient_21_4:$PATH' >> $GITHUB_ENV
+
           chmod +x sample_acook.sh
-          bash ./sample_acook.sh
+          ./sample_acook.sh
