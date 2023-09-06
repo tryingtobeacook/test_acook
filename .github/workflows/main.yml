@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - thirdmain
-
+      
 jobs:
   run-script:
     runs-on: ubuntu-latest
@@ -20,9 +20,8 @@ jobs:
           sudo unzip instantclient-sqlplus-linux.x64-21.4.0.0.0dbru.zip -d /opt/oracle
           cd /opt/oracle/instantclient_21_4 && find . -type f | sort
           export LD_LIBRARY_PATH=/opt/oracle/instantclient_21_4:$LD_LIBRARY_PATH
-          export PATH=$LD_LIBRARY_PATH:$PATH
+          export PATH=$PATH:/opt/oracle/instantclient_21_4
           sqlplus -V
       - name: Run shell script
         run: |
-          chmod +x sample_acook.sh
-          ./sample_acook.sh
+          chmod +x sample_acook. The updated GitHub Actions workflow YAML file with the fix is as follows:
