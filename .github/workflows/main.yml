@@ -25,8 +25,5 @@ jobs:
 
       - name: Set Oracle Environment
         run: |
-          echo 'export LD_LIBRARY_PATH=/opt/oracle/instantclient_21_4:$LD_LIBRARY_PATH' >> $HOME/.bashrc
-          echo 'export PATH=/opt/oracle/instantclient_21_4:$PATH' >> $HOME/.bashrc
-          source $HOME/.bashrc
           chmod +x sample_acook.sh
-          ./sample_acook.sh
+          bash sample_acook.sh
