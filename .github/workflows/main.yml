@@ -20,9 +20,7 @@ jobs:
           sudo unzip instantclient-basic-linux.x64-21.4.0.0.0dbru.zip -d /opt/oracle
           sudo unzip instantclient-sqlplus-linux.x64-21.4.0.0.0dbru.zip -d /opt/oracle
           cd /opt/oracle/instantclient_21_4 && find . -type f | sort
-          echo 'export LD_LIBRARY_PATH=/opt/oracle/instantclient_21_4:$LD_LIBRARY_PATH' >> $GITHUB_ENV
-          echo 'export PATH=/opt/oracle/instantclient_21_4:$PATH' >> $GITHUB_ENV
-
+          sqlplus -V
       - name: Set Environment and Run Script
         run: |
           chmod +x sample_acook.sh
