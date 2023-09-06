@@ -24,10 +24,7 @@ jobs:
           echo 'export ORACLE_HOME=/opt/oracle/instantclient_19_11' >> $HOME/.bashrc
           echo 'export LD_LIBRARY_PATH=/opt/oracle/instantclient_19_11' >> $HOME/.bashrc
           source $HOME/.bashrc  # Source the .bashrc file to apply environment variables
-
-      - name: Run sample_acook.sh script
         env:
           ORACLE_HOME: /opt/oracle/instantclient_19_11
-        run: |
-          chmod +x sample_acook.sh
-          ./sample_acook.sh
+            chmod +x sample_acook.sh
+            ./sample_acook.sh
