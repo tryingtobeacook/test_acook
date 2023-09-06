@@ -21,12 +21,10 @@ jobs:
           sudo unzip -d /opt/oracle instantclient-basic-linux.x64-21.4.0.0.0dbru.zip
           sudo unzip -d /opt/oracle instantclient-sqlplus-linux.x64-21.4.0.0.0dbru.zip
           cd /opt/oracle/instantclient_21_4 && find . -type f | sort
-          export LD_LIBRARY_PATH=/opt/oracle/instantclient_21_4:$LD_LIBRARY_PATH
-          export PATH=$LD_LIBRARY_PATH:$PATH
-          echo "LD_LIBRARY_PATH: $LD_LIBRARY_PATH"
-          echo "PATH: $PATH"
           echo "Installed SQL*Plus version:"
           sqlplus -V
+          export LD_LIBRARY_PATH=/opt/oracle/instantclient_21_4:$LD_LIBRARY_PATH
+          export PATH=$LD_LIBRARY_PATH:$PATH
 
       - name: Set Environment and Run Script
         run: |
