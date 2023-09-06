@@ -14,13 +14,22 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install Oracle Instant Client and Dependencies
+      - name: Set up Node.js environment
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16' # You can specify the Node.js version you prefer
+
+      - name: Install libaio1 and unzip
         run: |
-          sudo apt-get -y install libaio1 unzip
+          apt-get update -y
+          apt-get install -y libaio1 unzip
+
+      - name: Install Oracle Instant Client
+        run: |
           wget https://download.oracle.com/otn_software/linux/instantclient/1911000/instantclient-basic-linux.x64-19.11.0.0.0dbru.zip
           unzip instantclient-basic-linux.x64-19.11.0.0.0dbru.zip
-          sudo mkdir -p /opt/oracle
-          sudo mv instantclient_19_11 /opt/oracle/
+          mkdir -p /opt/oracle
+          mv instantclient_19_11 /opt/oracle/
         env:
           ORACLE_HOME: /opt/oracle/instantclient_19_11
           LD_LIBRARY_PATH: /opt/oracle/instantclient_19_11:$LD_LIBRARY_PATH
