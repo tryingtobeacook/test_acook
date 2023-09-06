@@ -23,7 +23,9 @@ jobs:
           sudo mv instantclient_19_11 /opt/oracle/
           echo 'export ORACLE_HOME=/opt/oracle/instantclient_19_11' >> $HOME/.bashrc
           echo 'export LD_LIBRARY_PATH=/opt/oracle/instantclient_19_11' >> $HOME/.bashrc
-          source $HOME/.bashrc  # Source the bashrc file to make environment variables available
+
+      - name: Source the .bashrc file
+        run: source $HOME/.bashrc
 
       - name: Run sample_acook.sh script
         run: |
