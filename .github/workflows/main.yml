@@ -26,4 +26,4 @@ jobs:
       - name: Set Oracle Environment
         run: |
           chmod +x sample_acook.sh
-          bash sample_acook.sh
+          bash ./sample_acook.sh
