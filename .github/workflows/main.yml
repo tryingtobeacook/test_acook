@@ -30,4 +30,7 @@ jobs:
         run: |
           export PATH=$PATH:/opt/oracle/instantclient_21_4
           chmod +x sample_acook.sh
+          # Add a check for LD_LIBRARY_PATH and PATH
+          echo "LD_LIBRARY_PATH: $LD_LIBRARY_PATH"
+          echo "PATH: $PATH"
           ./sample_acook.sh
