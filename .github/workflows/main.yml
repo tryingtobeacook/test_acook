@@ -1,32 +1,52 @@
-name: Run test
+name: Install Oracle SQL*Plus
 
 on:
-  workflow_dispatch:
   push:
     branches:
-      - thirdmain
+      - main
 
 jobs:
-  run-script:
+  install-sqlplus:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
-      - name: Install Sqlplus
-        run: | 
-          wget https://download.oracle.com/otn_software/linux/instantclient/214000/instantclient-basic-linux.x64-21.4.0.0.0dbru.zip
-          wget https://download.oracle.com/otn_software/linux/instantclient/214000/instantclient-sqlplus-linux.x64-21.4.0.0.0dbru.zip 
-          sudo mkdir -p /opt/oracle
-          sudo unzip -d /opt/oracle instantclient-basic-linux.x64-21.4.0.0.0dbru.zip
-          sudo unzip -d /opt/oracle instantclient-sqlplus-linux.x64-21.4.0.0.0dbru.zip
-          cd /opt/oracle/instantclient_21_4
-          export LD_LIBRARY_PATH=/opt/oracle/instantclient_21_4:$LD_LIBRARY_PATH
-          export PATH=$LD_LIBRARY_PATH:$PATH
-          source ~/.bashrc
+      - name: Install required packages
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y alien libaio1 rlwrap
+
+      - name: Download Oracle Instant Client RPMs
+        run: |
+          # Download the RPMs from Oracle's website
+          wget https://download.oracle.com/otn_software/linux/instantclient/214000/oracle-instantclient21.4-basic-21.4.0.0.0-1.x86_64.rpm
+          wget https://download.oracle.com/otn_software/linux/instantclient/214000/oracle-instantclient21.4-sqlplus-21.4.0.0.0-1.x86_64.rpm
+
+      - name: Convert RPMs to DEB using Alien
+        run: |
+          sudo alien -i oracle-instantclient21.4-basic-21.4.0.0.0-1.x86_64.rpm
+          sudo alien -i oracle-instantclient21.4-sqlplus-21.4.0.0.0-1.x86_64.rpm
+
+      - name: Configure LD_LIBRARY_PATH
+        run: |
+          echo "/usr/lib/oracle/21.4/client64/lib" | sudo tee /etc/ld.so.conf.d/oracle-instantclient.conf
+          sudo ldconfig
+
+      - name: Configure SQL*Plus alias
+        run: |
+          echo 'alias sqlplus="rlwrap -i -f ~/.sqlplus_history -H ~/.sqlplus_history -s 30000 sqlplus64"' | sudo tee /etc/profile.d/sqlplus_alias.sh
+          touch ~/.sqlplus_history
+
+      - name: Check SQL*Plus version
+        run: |
           sqlplus -V
 
-      - name: Set Environment and Run Script
+      - name: Run SQL*Plus command
         run: |
-          chmod +x sample_acook.sh
-          ./sample_acook.sh
+          sqlplus username/password@hostname:port/service
+
+    env:
+      ORACLE_HOME: /usr/lib/oracle/21.4/client64
+      LD_LIBRARY_PATH: /usr/lib/oracle/21.4/client64/lib
