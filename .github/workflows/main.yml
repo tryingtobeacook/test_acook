@@ -14,18 +14,21 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Install Oracle Instant Client and SQL*Plus
+      - name: Install Oracle Instant Client
         run: |
           sudo apt-get -y install libaio1 unzip
           wget https://download.oracle.com/otn_software/linux/instantclient/1911000/instantclient-basic-linux.x64-19.11.0.0.0dbru.zip
           unzip instantclient-basic-linux.x64-19.11.0.0.0dbru.zip
           sudo mkdir -p /opt/oracle
           sudo mv instantclient_19_11 /opt/oracle/
-          echo 'export ORACLE_HOME=/opt/oracle/instantclient_19_11' >> $HOME/.bashrc
-          echo 'export LD_LIBRARY_PATH=/opt/oracle/instantclient_19_11' >> $HOME/.bashrc
-          source $HOME/.bashrc  # Source the .bashrc file to apply environment variables
-          sqlplus -V
         env:
           ORACLE_HOME: /opt/oracle/instantclient_19_11
-            chmod +x sample_acook.sh
-            ./sample_acook.sh
+          LD_LIBRARY_PATH: ${{ runner.temp }}/actions-runner/_work/_temp
+
+      - name: Source the .bashrc file
+        run: source $HOME/.bashrc
+
+      - name: Run sample_acook.sh script
+        run: |
+          chmod +x sample_acook.sh
+          ./sample_acook.sh
