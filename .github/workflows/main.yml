@@ -21,7 +21,6 @@ jobs:
           sudo unzip -d /opt/oracle instantclient-basic-linux.x64-21.4.0.0.0dbru.zip
           sudo unzip -d /opt/oracle instantclient-sqlplus-linux.x64-21.4.0.0.0dbru.zip
           export LD_LIBRARY_PATH=/opt/oracle/instantclient_21_4:$LD_LIBRARY_PATH
-          export PATH=$PATH:/opt/oracle/instantclient_21_4
           export ORACLE_HOME=/opt/oracle/instantclient_21_4
           export TNS_ADMIN=/opt/oracle/instantclient_21_4 # Assuming TNS configuration files are here
 
@@ -29,7 +28,6 @@ jobs:
         run: |
           # Add a check for LD_LIBRARY_PATH, PATH, ORACLE_HOME, and TNS_ADMIN
           echo "LD_LIBRARY_PATH: $LD_LIBRARY_PATH"
-          echo "PATH: $PATH"
           echo "ORACLE_HOME: $ORACLE_HOME"
           echo "TNS_ADMIN: $TNS_ADMIN"
           chmod +x sample_acook.sh
