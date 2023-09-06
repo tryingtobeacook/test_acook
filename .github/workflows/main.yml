@@ -29,6 +29,7 @@ jobs:
       - name: Set Environment and Run Script
         run: |
           export PATH=$PATH:/opt/oracle/instantclient_21_4
+          export LD_LIBRARY_PATH=/opt/oracle/instantclient_21_4:$LD_LIBRARY_PATH  # Add this line
           chmod +x sample_acook.sh
           # Add a check for LD_LIBRARY_PATH and PATH
           echo "LD_LIBRARY_PATH: $LD_LIBRARY_PATH"
