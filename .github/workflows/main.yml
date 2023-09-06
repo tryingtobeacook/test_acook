@@ -12,9 +12,9 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
-      - name: Install Oracle Instant Client
+      - name: Install Oracle Instant Client and Dependencies
         run: |
           sudo apt-get -y install libaio1 unzip
           wget https://download.oracle.com/otn_software/linux/instantclient/1911000/instantclient-basic-linux.x64-19.11.0.0.0dbru.zip
@@ -23,10 +23,8 @@ jobs:
           sudo mv instantclient_19_11 /opt/oracle/
         env:
           ORACLE_HOME: /opt/oracle/instantclient_19_11
-          LD_LIBRARY_PATH: ${{ runner.temp }}/actions-runner/_work/_temp
-
-      - name: Source the .bashrc file
-        run: source $HOME/.bashrc
+          LD_LIBRARY_PATH: /opt/oracle/instantclient_19_11:$LD_LIBRARY_PATH
+          PATH: $PATH:/opt/oracle/instantclient_19_11
 
       - name: Run sample_acook.sh script
         run: |
