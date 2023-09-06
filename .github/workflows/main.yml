@@ -13,7 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Install Sqlplus and Configure Oracle Environment
+      - name: Install Sqlplus
         run: |
           wget https://download.oracle.com/otn_software/linux/instantclient/214000/instantclient-basic-linux.x64-21.4.0.0.0dbru.zip
           wget https://download.oracle.com/otn_software/linux/instantclient/214000/instantclient-sqlplus-linux.x64-21.4.0.0.0dbru.zip 
@@ -22,13 +22,22 @@ jobs:
           sudo unzip -d /opt/oracle instantclient-sqlplus-linux.x64-21.4.0.0.0dbru.zip
           export LD_LIBRARY_PATH=/opt/oracle/instantclient_21_4:$LD_LIBRARY_PATH
           export PATH=$PATH:/opt/oracle/instantclient_21_4
-        
+          export ORACLE_HOME=/opt/oracle/instantclient_21_4
+          export TNS_ADMIN=/opt/oracle/instantclient_21_4
+
       - name: Set Environment and Run Script
         run: |
-          # Add a check for LD_LIBRARY_PATH, PATH, ORACLE_HOME, and TNS_ADMIN
+          export LD_LIBRARY_PATH=/opt/oracle/instantclient_21_4:$LD_LIBRARY_PATH
+          export PATH=$PATH:/opt/oracle/instantclient_21_4
+          export ORACLE_HOME=/opt/oracle/instantclient_21_4
+          export TNS_ADMIN=/opt/oracle/instantclient_21_4
+          chmod +x sample_acook.sh
+          # Add a check for LD_LIBRARY_PATH and PATH
           echo "LD_LIBRARY_PATH: $LD_LIBRARY_PATH"
           echo "PATH: $PATH"
-          chmod +x sample_acook.sh
+          echo "Setting Oracle environment variables"
+          echo "ORACLE_HOME: $ORACLE_HOME"
+          echo "TNS_ADMIN: $TNS_ADMIN"
 
-          # Run your own script without specifying the full path to sqlplus
+          # Now, execute your script
           ./sample_acook.sh
