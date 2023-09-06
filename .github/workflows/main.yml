@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       LD_LIBRARY_PATH: /opt/oracle/instantclient_21_4
-      PATH: ${{ runner.tools.dir }}/oracle/instantclient_21_4:$PATH
+      PATH: /opt/oracle/instantclient_21_4:$PATH
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
