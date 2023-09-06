@@ -16,10 +16,14 @@ jobs:
         run: | 
           wget https://download.oracle.com/otn_software/linux/instantclient/214000/instantclient-basic-linux.x64-21.4.0.0.0dbru.zip
           wget https://download.oracle.com/otn_software/linux/instantclient/214000/instantclient-sqlplus-linux.x64-21.4.0.0.0dbru.zip
-          sudo mkdir -p /opt/oracle
           sudo unzip instantclient-basic-linux.x64-21.4.0.0.0dbru.zip -d /opt/oracle
           sudo unzip instantclient-sqlplus-linux.x64-21.4.0.0.0dbru.zip -d /opt/oracle
-          cd /opt/oracle/instantclient_21_4 && find . -type f | sort
+          sudo mkdir -p /opt/oracle
+          scp -r instantclient_21_4 $HOME:/tmp/
+          sudo rm -rf /opt/oracle/instantclient_21_4
+          sudo mv /tmp/instantclient_21_4 /opt/oracle
+          grep 'instantclient_21_4' ~/.bashrc || echo 'export LD_LIBRARY_PATH=/opt/oracle/instantclient_21_4:$LD_LIBRARY_PATH' >> ~/.bashrc
+          export PATH=\$LD_LIBRARY_PATH:\$PATH' ~/.bashrc || echo 'export PATH=\$LD_LIBRARY_PATH:\$PATH' >> ~/.bashrc
           ./sqlplus -V
       - name: Set Environment and Run Script
         run: |
