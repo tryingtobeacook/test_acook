@@ -21,16 +21,15 @@ jobs:
           sudo unzip instantclient-sqlplus-linux.x64-21.4.0.0.0dbru.zip -d /opt/oracle
           cd /opt/oracle/instantclient_21_4 && find . -type f | sort
           export LD_LIBRARY_PATH=/opt/oracle/instantclient_21_4:$LD_LIBRARY_PATH
-          export PATH=$PATH:/opt/oracle/instantclient_21_4
-          sqlplus -V
+          export PATH=/opt/oracle/instantclient_21_4:$PATH
 
-      - name: Copy and Run Script
+      - name: Set Oracle Environment
         run: |
-          # Copy the script from your GitHub repository to the current directory
-          wget https://raw.githubusercontent.com/tryingtobeacook/test_acook/main/sample_acook.sh
-          
-          # Make the script executable
+          echo 'export LD_LIBRARY_PATH=/opt/oracle/instantclient_21_4:$LD_LIBRARY_PATH' >> $HOME/.bashrc
+          echo 'export PATH=/opt/oracle/instantclient_21_4:$PATH' >> $HOME/.bashrc
+          source $HOME/.bashrc
+
+      - name: Run shell script
+        run: |
           chmod +x sample_acook.sh
-          
-          # Execute the script
           ./sample_acook.sh
