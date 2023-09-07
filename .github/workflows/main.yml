@@ -1,42 +1,19 @@
-name: Run test
-
+name: Run SQLPlus Commands
 on:
-  workflow_dispatch:
   push:
     branches:
-      - main
-
+      - hmain
 jobs:
-  run-script:
+  run-sqlplus:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Install Oracle Instant Client and SQL*Plus
+      - name: Install SQLPlus
         run: |
-          # Install required packages
-          sudo apt-get -y install libaio1 unzip
-
-          # Download the Oracle Instant Client package (adjust the version as needed)
-          wget https://download.oracle.com/otn_software/linux/instantclient/1911000/instantclient-basic-linux.x64-19.11.0.0.0dbru.zip
-
-          # Extract the package
-          unzip instantclient-basic-linux.x64-19.11.0.0.0dbru.zip
-
-          # Move the files to a specific location (e.g., /opt/oracle/instantclient_19_11)
-          sudo mkdir -p /opt/oracle
-          sudo mv instantclient_19_11 /opt/oracle/
-
-          # Set environment variables
-          echo 'export ORACLE_HOME=/opt/oracle/instantclient_19_11' >> $HOME/.bashrc
-          echo 'export LD_LIBRARY_PATH=/opt/oracle/instantclient_19_11' >> $HOME/.bashrc
-
-        env:
-          ORACLE_HOME: /opt/oracle/instantclient_19_11
-          LD_LIBRARY_PATH: /opt/oracle/instantclient_19_11
-          
-            sqlplus -V
-            chmod +x sample_acook.sh
-            ./sample_acook.sh
+          sudo apt-get update
+          sudo apt-get install sqlplus
+          sqlplus -V
+      - name: Run SQLPlus Commands
+        run: |
+          sqlplus -s username/password@database <<EOF
+          @/path/to/sqlplus_script.sql
+          EOF
