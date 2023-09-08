@@ -47,6 +47,7 @@ jobs:
           echo "Setting Oracle environment variables"
           echo "ORACLE_HOME: $ORACLE_HOME"
           echo "TNS_ADMIN: $TNS_ADMIN"
+          export PCF_CLI_PATH=/usr/local/bin/pcf
 
           # Now, execute your script
           ./sample_acook.sh
