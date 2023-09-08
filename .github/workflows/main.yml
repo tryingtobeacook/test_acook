@@ -32,8 +32,6 @@ jobs:
           sudo dpkg -i cf-installer.deb
           cf --version
 
-          cf7 --version
-
       - name: Set Environment and Run Script
         run: |
           export LD_LIBRARY_PATH=/opt/oracle/instantclient_21_4:$LD_LIBRARY_PATH
@@ -47,7 +45,6 @@ jobs:
           echo "Setting Oracle environment variables"
           echo "ORACLE_HOME: $ORACLE_HOME"
           echo "TNS_ADMIN: $TNS_ADMIN"
-          export PCF_CLI_PATH=/usr/local/bin/cf-installer
 
           # Now, execute your script
           ./sample_acook.sh
