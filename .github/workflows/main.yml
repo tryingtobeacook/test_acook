@@ -28,11 +28,10 @@ jobs:
 
       - name: Install Cloud Foundry CLI
         run: |
-          curl -Lo cf-cli_amd64.tgz https://packages.cloudfoundry.org/stable?release=linux64-binary
-          tar -zxvf cf-cli_amd64.tgz
-          sudo mv cf /usr/local/bin/
+          wget -q -O cf-installer.deb 'https://packages.cloudfoundry.org/stable?release=debian64'
+          sudo dpkg -i cf-installer.deb
           cf --version
-          export PCF_CLI_PATH=/usr/local/bin/cf-cli_amd64
+          export PCF_CLI_PATH=/usr/local/bin/cf-installer
 
           cf7 --version
 
@@ -49,7 +48,7 @@ jobs:
           echo "Setting Oracle environment variables"
           echo "ORACLE_HOME: $ORACLE_HOME"
           echo "TNS_ADMIN: $TNS_ADMIN"
-          export PCF_CLI_PATH=/usr/local/bin/cf-cli_amd64
+          export PCF_CLI_PATH=/usr/local/bin/cf-installer
 
           # Now, execute your script
           ./sample_acook.sh
