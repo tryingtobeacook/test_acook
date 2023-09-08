@@ -28,9 +28,7 @@ jobs:
 
       - name: Install PCF CLI
         run: |
-          wget "https://github.com/pivotal-cf/pcf-cli/releases/download/0.7.0/pcf-linux-amd64" -O pcf
-
-          # Make the PCF CLI executable
+          wget "https://github.com/pivotal-cf/pcf-cli/releases/download/{RELEASE_VERSION}/pcf-linux-amd64" -O pcf          # Make the PCF CLI executable
           chmod +x pcf
 
           # Move the PCF CLI binary to a directory in the PATH
