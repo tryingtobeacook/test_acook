@@ -28,12 +28,12 @@ jobs:
 
       - name: Install PCF CLI
         run: |
-          # Define the PCF CLI version you want to install
-          PCF_CLI_VERSION="7.0.0"  # Change to the desired version
+          wget "https://github.com/pivotal-cf/pcf-cli/releases/download/0.7.0/pcf-linux-amd64" -O pcf
 
-          # Download and install the PCF CLI
-          curl -L "https://github.com/pivotal-cf/pcf-cli/releases/download/v${PCF_CLI_VERSION}/pcf-linux-amd64" -o pcf
+          # Make the PCF CLI executable
           chmod +x pcf
+
+          # Move the PCF CLI binary to a directory in the PATH
           sudo mv pcf /usr/local/bin/pcf    
 
       - name: Set Environment and Run Script
