@@ -33,7 +33,7 @@ jobs:
           sudo mv cf /usr/local/bin/
           export PCF_CLI_PATH=/usr/local/bin/cf
 
-          cf --version
+          cf7 --version
 
       - name: Set Environment and Run Script
         run: |
