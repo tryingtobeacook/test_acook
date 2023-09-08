@@ -26,6 +26,16 @@ jobs:
           export TNS_ADMIN=/opt/oracle/instantclient_21_4
           sqlplus -V
 
+      - name: Install PCF CLI
+        run: |
+          # Define the PCF CLI version you want to install
+          PCF_CLI_VERSION="7.0.0"  # Change to the desired version
+
+          # Download and install the PCF CLI
+          curl -L "https://github.com/pivotal-cf/pcf-cli/releases/download/v${PCF_CLI_VERSION}/pcf-linux-amd64" -o pcf
+          chmod +x pcf
+          sudo mv pcf /usr/local/bin/pcf    
+
       - name: Set Environment and Run Script
         run: |
           export LD_LIBRARY_PATH=/opt/oracle/instantclient_21_4:$LD_LIBRARY_PATH

@@ -13,3 +13,4 @@ SQL_QUERY="SELECT * FROM your_table"
 # Execute SQLPlus command
 sqlplus -V
 
+cf --version
