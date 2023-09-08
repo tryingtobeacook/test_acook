@@ -31,7 +31,6 @@ jobs:
           wget -q -O cf-installer.deb 'https://packages.cloudfoundry.org/stable?release=debian64'
           sudo dpkg -i cf-installer.deb
           cf --version
-          export PCF_CLI_PATH=/usr/local/bin/cf-installer
 
           cf7 --version
 
