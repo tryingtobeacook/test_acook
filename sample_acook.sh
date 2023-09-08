@@ -13,7 +13,3 @@ SQL_QUERY="SELECT * FROM your_table"
 # Execute SQLPlus command
 sqlplus -V
 
-sqlplus $DB_USER/$DB_PASS@$DB_HOST AS SYSDBA <<EOF
-$SQL_QUERY
-exit
-EOF
