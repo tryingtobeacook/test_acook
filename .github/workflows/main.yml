@@ -14,29 +14,28 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install Oracle Instant Client and SQL*Plus
+      - name: Set up Oracle Instant Client
         run: |
-          # Install required packages
-          sudo apt-get -y install libaio1 unzip
+          sudo apt-get update
+          sudo apt-get install -y libaio1
+          wget https://download.oracle.com/otn_software/linux/instantclient/211000/oracle-instantclient-basiclite_21.1.0.0.0-2_amd64.deb
+          sudo dpkg -i oracle-instantclient-basiclite_21.1.0.0.0-2_amd64.deb
+          echo /usr/lib/oracle/21/client64/lib | sudo tee -a /etc/ld.so.conf.d/oracle-instantclient.conf
+          sudo ldconfig
 
-          # Download the Oracle Instant Client package (adjust the version as needed)
-          wget https://download.oracle.com/otn_software/linux/instantclient/1911000/instantclient-basic-linux.x64-19.11.0.0.0dbru.zip
+      - name: Install CLPPlus
+        run: |
+          wget https://download.oracle.com/otn_software/developer-tools/sqlcl/sqlcl-21.4.1.285.1238.zip
+          unzip sqlcl-21.4.1.285.1238.zip
+          chmod +x sqlcl/bin/sql
+          sudo mv sqlcl /usr/local
+          sudo ln -s /usr/local/sqlcl/bin/sql /usr/local/bin/sql
 
-          # Extract the package
-          unzip instantclient-basic-linux.x64-19.11.0.0.0dbru.zip
+      - name: Verify CLPPlus installation
+        run: |
+          clpplus -v
 
-          # Move the files to a specific location (e.g., /opt/oracle/instantclient_19_11)
-          sudo mkdir -p /opt/oracle
-          sudo mv instantclient_19_11 /opt/oracle/
-
-          # Set environment variables
-          echo 'export ORACLE_HOME=/opt/oracle/instantclient_19_11' >> $HOME/.bashrc
-          echo 'export LD_LIBRARY_PATH=/opt/oracle/instantclient_19_11' >> $HOME/.bashrc
-
-        env:
-          ORACLE_HOME: /opt/oracle/instantclient_19_11
-          LD_LIBRARY_PATH: /opt/oracle/instantclient_19_11
-          
-            sqlplus -V
-            chmod +x sample_acook.sh
-            ./sample_acook.sh
+      - name: Clean up
+        run: |
+          rm -f oracle-instantclient-basiclite_21.1.0.0.0-2_amd64.deb
+          rm -f sqlcl-21.4.1.285.1238.zip
