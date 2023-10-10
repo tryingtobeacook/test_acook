@@ -30,12 +30,5 @@ jobs:
           chmod +x sqlcl/bin/sql
           sudo mv sqlcl /usr/local
           sudo ln -s /usr/local/sqlcl/bin/sql /usr/local/bin/sql
-
-      - name: Verify CLPPlus installation
-        run: |
           clpplus -v
 
-      - name: Clean up
-        run: |
-          rm -f oracle-instantclient-basiclite_21.1.0.0.0-2_amd64.deb
-          rm -f sqlcl-21.4.1.285.1238.zip
