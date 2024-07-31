@@ -2,6 +2,9 @@ name: Workflow Dispatch without Branch Run test
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
   run-script:
