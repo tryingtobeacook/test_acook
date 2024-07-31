@@ -1,4 +1,4 @@
-name: Workflow Dispatch without Branch Run test
+name: Run test
 
 on:
   workflow_dispatch:
