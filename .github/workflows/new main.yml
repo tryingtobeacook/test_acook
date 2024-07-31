@@ -2,9 +2,6 @@ name: Workflow Dispatch without Branch Run test
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - test/workflow_dispatch_without_branch_name
 
 jobs:
   run-script:
